@@ -1,0 +1,40 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!--    //Этот код выдает розовый Титр у тулбар разобрать как это работает-->
+    <!--    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">-->
+    <!--        <item name="android:actionBarStyle">@style/ActionBar</item>-->
+    <!--                <item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--                <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--                <item name="colorAccent">@color/colorAccent</item>-->
+    <!--    </style>-->
+
+    <!--    <style name="ActionBar" parent="@android:style/Widget.ActionBar">-->
+    <!--        <item name="android:titleTextStyle">@style/ActionBar.Title</item>-->
+    <!--        <item name="android:subtitleTextStyle">@style/ActionBar.Subtitle</item>-->
+    <!--    </style>-->
+
+    <!--    <style name="ActionBar.Title">-->
+    <!--        <item name="android:textColor">#FAF</item>-->
+    <!--    </style>-->
+
+    <!--    <style name="ActionBar.Subtitle">-->
+    <!--        <item name="android:textColor">#C8FFAA</item>-->
+    <!--    </style>-->
+</resources>
