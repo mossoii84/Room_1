@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -26,9 +27,12 @@ import java.util.List;
         void insert(User user);
         @Insert
         void insertAll(User users);
+
+        @Update
+        void update(User user);
+
         @Delete
         void delete(User user);
-
         // методы которые не сушествуют в стандарном варианте(стандартные = которые тут без @Query написаны)
         // мы пишем сами в SQL через @Query
         @Query("DELETE FROM User")

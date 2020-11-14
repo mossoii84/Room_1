@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.room_1.adapterRecycler.OnItemClickListener;
 import com.example.room_1.adapterRecycler.RoomAdapter;
 import com.example.room_1.data.User;
 import com.example.room_1.data.UserViewModel;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
     // Для RecyclerView
     private ArrayList<User> users = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -33,12 +34,8 @@ public class MainActivity extends AppCompatActivity {
     //импортируем наш ViewModel - типо @Autowarid в сприг
     private UserViewModel userViewModel;
 
-    // Тест добавления User
-//    private TextInputLayout input_lastname;
-//    private TextInputLayout input_firstname;
-//    private Button buttonInput;
-
-    private static final int  Add_Users_Activity = 1;
+    private static final int Add_Users_Activity = 1;
+    private static final int Edit_Users_Activity = 2;
 
 
     @Override
@@ -51,8 +48,12 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //в интент пишем наш Активити и какой запустить второй
                 Intent intent = new Intent(MainActivity.this, AddUserActivity.class);
-                startActivityForResult(intent, Add_Users_Activity); //этот метод реализуем ниже = onActivityResult
+                //startActivityForResult- означает что в первом активити ты вызываешь второе активити, и его результат
+                //setResult(RESULT_OK, myData); =RESULT_OK - просто означает что операция законсилась успешно, а  вот
+                // = myData передает из второго активити какие то данные
+                startActivityForResult(intent, Add_Users_Activity); //этот метод реализуем ниже
             }
         });
 
@@ -60,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
         // делаем добавление данных insert
 //        addSave();
 
-                //подключаем наш recyclerView
+        //подключаем наш recyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // создаем адаптер
-        roomAdapter = new RoomAdapter();
+        roomAdapter = new RoomAdapter(this); //this - появилось после listener
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(roomAdapter);
         roomAdapter.updateList(users);
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent myData) {
         super.onActivityResult(requestCode, resultCode, myData);
@@ -124,8 +125,28 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Не Сохранено", Toast.LENGTH_LONG).show();
         }
-
     }
+
+
+        // При клике на строку(item) RecyclerView
+        @Override
+        public void onItemClick(User user) {
+            Intent intent = new Intent(MainActivity.this, AddUserActivity.class);
+            intent.putExtra(AddUserActivity.EXTRA_Firstname, user.getFirstName());
+            intent.putExtra(AddUserActivity.EXTRA_Lastname, user.getLastName());
+            startActivityForResult(intent, Edit_Users_Activity);
+
+            Toast.makeText(MainActivity.this, user.getFirstName(), Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
+
+
+
+
+}
 
 
 
@@ -192,10 +213,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-}

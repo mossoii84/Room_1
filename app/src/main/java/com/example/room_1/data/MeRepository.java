@@ -33,20 +33,6 @@ public class MeRepository{
         public void insert(User user){          //этот класс написан ниже
             new InsertUserAsyncTask(userDao).execute(user);
         }
-        //точно нак же и другие методы делаем
-       //update у нас пока в dao нет!
-//        public void updete(User user){}
-//
-//        // внимательно с delete там будет чуть по другому так как на экран выведится иначе строки
-    public void delete(User user){
-            new DeleteNoteAsyncTask(userDao).execute(user); } //прописываем в репозитории (и в UserViewModel)
-    public void deleteAll(){
-        new DeleteAllNoteAsyncTask(userDao).execute();
-    }
-
-
-
-
 
     //НЕ ПОЙМУ ТОЛИ ТУТ insert (тут не работают) ТО ли В APPDATABASE
     //    AsyncTask создает фоновый поток и выполняет в нем код, содержащийся в методе doInBackground(…).
@@ -61,13 +47,14 @@ private static class InsertUserAsyncTask extends AsyncTask<User,Void,Void>{
 //             userDao.insert(new User(1,"firstname","lastname")); //эти инсерты не работают!
                 userDao.insert(user[0]);
                 return null;
-            }
-    }
+            } }
 
+    // внимательно с delete там будет чуть по другому так как на экран выведится иначе строки
+ public void delete(User user){ new DeleteUserAsyncTask(userDao).execute(user); } //прописываем в репозитории (и в UserViewModel)
 //            //это для Delete
-private static class DeleteNoteAsyncTask extends AsyncTask<User,Void,Void>{
+private static class DeleteUserAsyncTask extends AsyncTask<User,Void,Void>{
                 private UserDao userDao;
-                private DeleteNoteAsyncTask(UserDao userDao){
+                private DeleteUserAsyncTask(UserDao userDao){
                     this.userDao=userDao;
                 }
                 @Override
@@ -77,6 +64,10 @@ private static class DeleteNoteAsyncTask extends AsyncTask<User,Void,Void>{
                 }
              }
 
+
+    public void deleteAll(){
+        new DeleteAllNoteAsyncTask(userDao).execute();
+    }
         //это для DeleteAll чуть иначе
         private static class DeleteAllNoteAsyncTask extends AsyncTask<Void,Void,Void>{
             private UserDao userDao;
@@ -90,5 +81,20 @@ private static class DeleteNoteAsyncTask extends AsyncTask<User,Void,Void>{
             }
         }
 
+    //точно нак же и другие методы делаем
+    //Делаем update
+    public void update(User user){ new DeleteUserAsyncTask(userDao).execute(user); }
+    //это для Delete
+    private static class UpdateUserAsyncTask extends AsyncTask<User,Void,Void>{
+        private UserDao userDao;
+        private UpdateUserAsyncTask(UserDao userDao){
+            this.userDao=userDao;
+        }
+        @Override
+        protected Void doInBackground(User... user){
+            userDao.delete(user[0]);
+            return null;
+        }
+    }
 
 }
